@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import puppeteer from "puppeteer";
+import chrome from "chrome-aws-lambda";
 import type { Spot } from "../../types";
 
 function getParkingName(id: number) {
@@ -38,7 +39,15 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<Spot[]>
 ) {
-	const browser = await puppeteer.launch();
+	const browser = await puppeteer.launch(
+		process.env.NODE_ENV === "production"
+			? {
+					args: chrome.args,
+					executablePath: await chrome.executablePath,
+					headless: chrome.headless,
+			  }
+			: {}
+	);
 	const page = await browser.newPage();
 
 	await page.goto("https://iparking.pwr.edu.pl/");
