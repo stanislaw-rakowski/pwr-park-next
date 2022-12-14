@@ -13,7 +13,7 @@
 		"@types/react": "18.0.26",
 		"@types/react-dom": "18.0.9",
 		"browserless": "^9.8.0",
-		"chrome-aws-lambda": "^10.1.0",
+		"chrome-aws-lambda": "^8.0.2",
 		"decompress-response": "^8.0.0",
 		"eslint": "8.29.0",
 		"eslint-config-next": "13.0.6",
