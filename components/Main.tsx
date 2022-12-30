@@ -156,7 +156,7 @@ export default function Main({ isDarkMode, changeTheme }: Props) {
 									<p>{spot.symbol}</p>
 									<NavigationButton
 										as="a"
-										href={`maps://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=${spot.geo_lat},${spot.geo_lan}`}
+										href={`http://maps.apple.com/maps?q=${spot.geo_lat},${spot.geo_lan}`}
 										target="_blank"
 									>
 										<BiNavigation />
