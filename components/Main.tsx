@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { BsFillSunFill, BsFillMoonFill } from 'react-icons/bs'
+import { MdNotificationsActive, MdNotificationsOff } from 'react-icons/md'
+import { BiNavigation } from 'react-icons/bi'
 import type { Data } from '../lib/types'
 
 const Wrapper = styled.main`
@@ -11,6 +13,7 @@ const Wrapper = styled.main`
 	align-items: center;
 	color: ${({ theme }) => theme.primaryFontColor};
 	background-color: ${({ theme }) => theme.primaryBackground};
+	overflow: hidden;
 
 	* {
 		transition: all 150ms ease;
@@ -33,16 +36,41 @@ const Title = styled.h1`
 	text-align: center;
 `
 
-const ThemeButton = styled.button`
-	position: absolute;
-	top: 10px;
-	right: 10px;
+const IconButton = styled.button`
 	height: 30px;
 	width: 30px;
+	display: flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
 	background-color: inherit;
 	border-radius: 8px;
 	border: 1px solid ${({ theme }) => theme.secondaryBackground};
-	color: inherit;
+	color: ${({ theme }) => theme.primaryFontColor};
+
+	svg {
+		min-height: 12px;
+		min-width: 12px;
+	}
+`
+
+const ThemeButton = styled(IconButton)`
+	position: absolute;
+	top: 10px;
+	right: 10px;
+`
+
+const NotificationsButton = styled(IconButton)`
+	position: absolute;
+	top: 10px;
+	left: 10px;
+`
+
+const NavigationButton = styled(IconButton)`
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	border: 1px solid #666;
 `
 
 const Accent = styled.span`
@@ -52,7 +80,7 @@ const Accent = styled.span`
 const Container = styled.div`
 	width: 100%;
 	height: calc(100% - 110px);
-	padding: 2rem 0;
+	padding: 1rem 0;
 
 	ul {
 		height: 100%;
@@ -63,13 +91,13 @@ const Container = styled.div`
 		justify-content: center;
 		padding: 0;
 		margin: 0;
+		gap: 10px;
 	}
 `
 
 const Square = styled.li`
-	width: 50%;
-	aspect-ratio: 1/1;
-	padding: 10px;
+	width: 170px;
+	height: 170px;
 
 	div {
 		height: 100%;
@@ -80,6 +108,7 @@ const Square = styled.li`
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		position: relative;
 
 		h2 {
 			margin: 0;
@@ -95,6 +124,7 @@ type Props = {
 
 export default function Main({ isDarkMode, changeTheme }: Props) {
 	const [data, setData] = React.useState<Data | null>(null)
+	const [notifications, setNotifications] = React.useState(false)
 
 	React.useEffect(() => {
 		const getData = async () => {
@@ -108,6 +138,9 @@ export default function Main({ isDarkMode, changeTheme }: Props) {
 	return (
 		<Wrapper>
 			<Header>
+				<NotificationsButton onClick={() => setNotifications((curr) => !curr)}>
+					{notifications ? <MdNotificationsOff /> : <MdNotificationsActive />}
+				</NotificationsButton>
 				<Title>
 					<Accent>Pwr</Accent> Park
 				</Title>
@@ -121,6 +154,13 @@ export default function Main({ isDarkMode, changeTheme }: Props) {
 								<div>
 									<h2>{spot.liczba_miejsc}</h2>
 									<p>{spot.symbol}</p>
+									<NavigationButton
+										as="a"
+										href={`maps://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=${spot.geo_lat},${spot.geo_lan}`}
+										target="_blank"
+									>
+										<BiNavigation />
+									</NavigationButton>
 								</div>
 							</Square>
 						))}
