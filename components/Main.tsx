@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { BsFillSunFill, BsFillMoonFill } from 'react-icons/bs'
 import { MdNotificationsActive, MdNotificationsOff } from 'react-icons/md'
 import { BiNavigation } from 'react-icons/bi'
+import { LiveChatWidget } from '@livechat/widget-react'
 import type { Data } from '../lib/types'
 
 const Wrapper = styled.main`
@@ -166,6 +167,7 @@ export default function Main({ isDarkMode, changeTheme }: Props) {
 						))}
 					</ul>
 				)}
+				<LiveChatWidget license="14842539" />
 			</Container>
 		</Wrapper>
 	)
